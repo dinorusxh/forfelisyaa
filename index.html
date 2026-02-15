@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Felisya 🤍</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #ffc0cb, #ff69b4);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+h1 {
+    margin-top: 90px;
+    font-size: 34px;
+    color: white;
+}
+
+p {
+    color: white;
+}
+
+#letterBox {
+    display: none;
+    width: 85%;
+    max-width: 600px;
+    margin: 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+    font-size: 16px;
+    line-height: 1.7;
+    text-align: left;
+    color: #444;
+}
+
+.heart {
+    position: absolute;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+    text-shadow: 0 0 12px rgba(255,255,255,0.9);
+}
+
+.flower {
+    position: absolute;
+    top: -10%;
+    font-size: 20px;
+    animation: fall 8s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes fall {
+    0% {transform: translateY(-10vh);}
+    100% {transform: translateY(110vh);}
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+    font-size: 16px;
+    color: #444;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Happy Valentine Felisya 🤍</h1>
+<p>Klik 7 love putih dulu untuk buka suratnya</p>
+
+<div id="letterBox"></div>
+
+<div class="popup" id="popup">
+    🤍 Semoga ini berkesan yaa.
+</div>
+
+<script>
+let score = 0;
+
+// GAME LOVE PUTIH
+function spawnHeart(){
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 90 + "vw";
+    heart.style.top = Math.random() * 90 + "vh";
+
+    heart.onclick = function(){
+        score++;
+        heart.remove();
+        if(score == 7){
+            document.getElementById("letterBox").style.display = "block";
+            typeLetter();
+        }
+    }
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 4000);
+}
+
+setInterval(spawnHeart, 900);
+
+// BUNGA JATUH
+setInterval(function(){
+    let flower = document.createElement("div");
+    flower.classList.add("flower");
+    flower.innerHTML = "🌸";
+    flower.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(flower);
+
+    setTimeout(() => {
+        flower.remove();
+    }, 8000);
+}, 700);
+
+// SURAT TYPING
+let text = `Happy Valentine yaaa Felisya 🤍
+
+Walaupun udah lewat tanggal 14 Februari, tapi gapapa gua kasihnya sekarang soalnya baru bisa kasih sekarang.
+
+Alasan kado Valentine-nya ada dua:
+
+1. Gua ngasih Lego bunga karena biar lu ada kerjaan selama libur kalo lagi gabut. Kalo gua kasih yang udah jadi bouquet rasanya kurang seru, jadi mending lu rakit sendiri biar ada kesibukan juga hehe.
+
+2. Gua ngasih cookies Lotus karena gua sering liat lu suka banget sama Lotus. Terus yang langsung kepikiran itu cookies. Walaupun bukan buatan gua, semoga lu suka yaaa. Next kalo gua lagi niat, gua bikinin sendiri deh 🤭
+
+Sebenernya gua agak gaenak ngasihnya di QR karena rame, takut gimana-gimana. Mungkin lu bakal mikir kenapa lu doang yang dikasih. Sebenernya ada kok yang gua kasih bunga juga, tapi bukan anak QR hehe. Nanti bakal ada waktunya lu tau kenapa gua ngasih ini. Mungkin ini bisa bantu gua juga biar gua nggak takut lagi sama tanggal 14 Februari.
+
+Pokoknya semoga lu suka yaaa 🤍 Gua gatau banyak hal yang lu suka, tapi semoga ini berkesan. Dan semoga lu disukain balik sama orang yang lagi lu kejar. Semangat ngejarnyaaa, semoga dia jauh lebih baik dari yang sebelumnya ✨`;
+
+let i = 0;
+
+function typeLetter(){
+    if(i < text.length){
+        document.getElementById("letterBox").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeLetter, 25);
+    } else {
+        document.getElementById("popup").style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
