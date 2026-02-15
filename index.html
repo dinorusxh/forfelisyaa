@@ -3,157 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Felisya 🤍</title>
+<title>Halo guys</title>
 
 <style>
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #ffc0cb, #ff69b4);
+    background: #ff69b4; /* pink biasa */
     font-family: Arial, sans-serif;
     text-align: center;
-    overflow: hidden;
+    color: white;
+    overflow-x: hidden;
 }
 
 h1 {
-    margin-top: 90px;
-    font-size: 34px;
-    color: white;
+    margin-top: 60px;
 }
 
-p {
-    color: white;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
 }
 
-#letterBox {
+.box {
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.box:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.5);
+}
+
+#message {
     display: none;
-    width: 85%;
-    max-width: 600px;
+    opacity: 0;
+    transform: translateY(30px);
     margin: 30px auto;
+    width: 90%;
+    max-width: 600px;
     background: white;
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
-    font-size: 16px;
-    line-height: 1.7;
-    text-align: left;
     color: #444;
+    text-align: left;
+    line-height: 1.7;
+    transition: 0.8s ease;
 }
 
-.heart {
-    position: absolute;
-    font-size: 30px;
-    cursor: pointer;
-    color: white;
-    text-shadow: 0 0 12px rgba(255,255,255,0.9);
+#message.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.flower {
-    position: absolute;
-    top: -10%;
-    font-size: 20px;
-    animation: fall 8s linear infinite;
-    opacity: 0.8;
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: 0;
+    animation: fall 3s linear forwards;
 }
 
 @keyframes fall {
-    0% {transform: translateY(-10vh);}
-    100% {transform: translateY(110vh);}
-}
-
-.popup {
-    display: none;
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.2);
-    font-size: 16px;
-    color: #444;
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<h1>Happy Valentine Felisya 🤍</h1>
-<p>Klik 7 love putih dulu untuk buka suratnya</p>
+<h1>Cari Bintang Tersembunyi ⭐</h1>
+<p>Klik kotak sampai kamu menemukan bintang!</p>
 
-<div id="letterBox"></div>
+<div class="grid" id="grid"></div>
 
-<div class="popup" id="popup">
-    🤍 Semoga ini berkesan yaa.
+<div id="message">
+<h2 style="text-align:center;">💌 Surat Untuk Felisya 💌</h2>
+
+<p>
+*Happy Valentine yaaa Felisya 🌷*<br><br>
+
+Walaupun udah lewat tanggal 14 Februari, tapi gapapa gua kasihnya sekarang soalnya baru bisa kasih sekarang.<br><br>
+
+Alasan kado Valentine-nya ada dua:<br><br>
+
+1. Gua ngasih Lego bunga karena biar lu ada kerjaan selama libur kalo lagi gabut. Kalo gua kasih yang udah jadi bouquet rasanya kurang seru, jadi mending lu rakit sendiri biar ada kesibukan juga hehe.<br><br>
+
+2. Gua ngasih cookies Lotus karena gua sering liat lu suka banget sama Lotus. Terus yang langsung kepikiran itu cookies. Walaupun bukan buatan gua, semoga lu suka yaaa. Next kalo gua lagi niat, gua bikinin sendiri deh 🤭<br><br>
+
+Sebenernya gua agak gaenak ngasihnya di QR karena rame, takut gimana-gimana. Mungkin lu bakal mikir kenapa lu doang yang dikasih. Sebenernya ada kok yang gua kasih bunga juga, tapi bukan anak QR hehe. Nanti bakal ada waktunya lu tau kenapa gua ngasih ini. Mungkin ini bisa bantu gua juga biar gua nggak takut lagi sama tanggal 14 Februari.<br><br>
+
+Pokoknya semoga lu suka yaaa 💛 Gua gatau banyak hal yang lu suka, tapi semoga ini berkesan. Dan semoga lu disukain balik sama orang yang lagi lu kejar. Semangat ngejarnyaaa, semoga dia jauh lebih baik dari yang sebelumnya ✨🌷
+</p>
+
 </div>
 
 <script>
-let score = 0;
+let correct = Math.floor(Math.random() * 6);
+let grid = document.getElementById("grid");
 
-// GAME LOVE PUTIH
-function spawnHeart(){
-    let heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤";
-    heart.style.left = Math.random() * 90 + "vw";
-    heart.style.top = Math.random() * 90 + "vh";
+for(let i = 0; i < 6; i++){
+    let box = document.createElement("div");
+    box.classList.add("box");
+    box.innerHTML = "🎀";
 
-    heart.onclick = function(){
-        score++;
-        heart.remove();
-        if(score == 7){
-            document.getElementById("letterBox").style.display = "block";
-            typeLetter();
+    box.onclick = function(){
+        if(i == correct){
+            box.innerHTML = "⭐";
+            showMessage();
+            confetti();
+        } else {
+            box.innerHTML = "❌";
         }
-    }
+    };
 
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 4000);
+    grid.appendChild(box);
 }
 
-setInterval(spawnHeart, 900);
+function showMessage(){
+    let msg = document.getElementById("message");
+    msg.classList.add("show");
+}
 
-// BUNGA JATUH
-setInterval(function(){
-    let flower = document.createElement("div");
-    flower.classList.add("flower");
-    flower.innerHTML = "🌸";
-    flower.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(flower);
-
-    setTimeout(() => {
-        flower.remove();
-    }, 8000);
-}, 700);
-
-// SURAT TYPING
-let text = `Happy Valentine yaaa Felisya 🤍
-
-Walaupun udah lewat tanggal 14 Februari, tapi gapapa gua kasihnya sekarang soalnya baru bisa kasih sekarang.
-
-Alasan kado Valentine-nya ada dua:
-
-1. Gua ngasih Lego bunga karena biar lu ada kerjaan selama libur kalo lagi gabut. Kalo gua kasih yang udah jadi bouquet rasanya kurang seru, jadi mending lu rakit sendiri biar ada kesibukan juga hehe.
-
-2. Gua ngasih cookies Lotus karena gua sering liat lu suka banget sama Lotus. Terus yang langsung kepikiran itu cookies. Walaupun bukan buatan gua, semoga lu suka yaaa. Next kalo gua lagi niat, gua bikinin sendiri deh 🤭
-
-Sebenernya gua agak gaenak ngasihnya di QR karena rame, takut gimana-gimana. Mungkin lu bakal mikir kenapa lu doang yang dikasih. Sebenernya ada kok yang gua kasih bunga juga, tapi bukan anak QR hehe. Nanti bakal ada waktunya lu tau kenapa gua ngasih ini. Mungkin ini bisa bantu gua juga biar gua nggak takut lagi sama tanggal 14 Februari.
-
-Pokoknya semoga lu suka yaaa 🤍 Gua gatau banyak hal yang lu suka, tapi semoga ini berkesan. Dan semoga lu disukain balik sama orang yang lagi lu kejar. Semangat ngejarnyaaa, semoga dia jauh lebih baik dari yang sebelumnya ✨`;
-
-let i = 0;
-
-function typeLetter(){
-    if(i < text.length){
-        document.getElementById("letterBox").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeLetter, 25);
-    } else {
-        document.getElementById("popup").style.display = "block";
+function confetti(){
+    for(let i=0; i<40; i++){
+        let c = document.createElement("div");
+        c.classList.add("confetti");
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.background = ["#fff","#ffe4e1","#ffb6c1","#ffc0cb"][Math.floor(Math.random()*4)];
+        c.style.animationDuration = (Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>{ c.remove(); },3000);
     }
 }
 </script>
